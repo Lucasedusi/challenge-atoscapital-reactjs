@@ -1,7 +1,7 @@
 export const defaultTheme = {
 	colors: {
 		"base-white": "#FFFFFF",
-		"base-background": "#FAFAFA",
+		"base-background": "#F3F2F2",
 		"base-card": "#F3F2F2",
 		"base-error": "#f84747",
 		"brand-purple-dark": "#4B2995",
