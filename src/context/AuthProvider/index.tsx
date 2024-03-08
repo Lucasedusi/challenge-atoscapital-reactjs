@@ -1,20 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 import { useToast } from "@chakra-ui/react";
 import { Api } from "../../services/api";
-// Importe o cliente de API que você está usando
-
-interface User {
-	id: number;
-	email: string;
-	// Adicione outras propriedades do usuário conforme necessário
-}
-
-interface AuthContextData {
-	user: User | null;
-	signed: boolean;
-	signIn: (credentials: { email: string; password: string }) => Promise<void>;
-	signOut: () => void;
-}
+import { AuthContextData, IUser } from "./types";
 
 export const AuthContext = createContext<AuthContextData>(
 	{} as AuthContextData
@@ -23,7 +10,7 @@ export const AuthContext = createContext<AuthContextData>(
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {
-	const [user, setUser] = useState<User | null>(null);
+	const [user, setUser] = useState<IUser | null>(null);
 	const toast = useToast();
 
 	useEffect(() => {
