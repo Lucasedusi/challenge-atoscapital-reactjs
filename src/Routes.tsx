@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "./pages/Home";
 import { LoginPage } from "./pages/Login";
-import { RegisterPage } from "./pages/Register";
 import { ProtectdLayout } from "./components/ProtectedLayout";
+import RegisterPage from "./pages/Register";
 
 export function Router() {
 	return (
