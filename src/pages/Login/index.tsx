@@ -1,14 +1,16 @@
-import { Button, Input } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-import "./style.scss";
-
-import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { LayoutComponents } from "../../components/LayoutComponents";
 import { AuthContext } from "../../context/AuthProvider";
+
+import Logo from "../../assets/logo.svg";
+import { Button } from "../../components/ButtonComponent";
+import "./style.scss";
 
 interface User {
 	email: string;
@@ -16,13 +18,20 @@ interface User {
 }
 
 const loginSchema = yup.object().shape({
-	email: yup.string().required("E-mail Obrigatório").email("E-mail Inválido"),
-	password: yup.string().required("Senha Obrigatória").min(6, "Senha Inválida"),
+	email: yup
+		.string()
+		.required("E-mail Obrigatório")
+		.email("E-mail ou Senha inválidos"),
+	password: yup
+		.string()
+		.required("Senha Obrigatória")
+		.min(6, "E-mail ou Senha inválidos"),
 });
 
-export function LoginPage() {
+export const LoginPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
 	const { signIn, signed } = useContext(AuthContext);
 
 	const { register, handleSubmit, formState } = useForm<User>({
@@ -33,7 +42,7 @@ export function LoginPage() {
 
 	const navigate = useNavigate();
 
-	const handleLogin: SubmitHandler<User> = async () => {
+	const handleSignIn: SubmitHandler<User> = async () => {
 		const data = {
 			email: email,
 			password: password,
@@ -46,54 +55,66 @@ export function LoginPage() {
 		return navigate("/home");
 	} else {
 		return (
-			<form onSubmit={handleSubmit(handleLogin)} className="login-form">
-				<span className="login-form-title">
-					{/* <img src={logoImg} alt="Jovem Programador" /> */}
-				</span>
-
-				<div className="wrap-input">
-					<input
-						className={email !== "" ? "has-value input" : "input"}
-						{...register("email")}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<span className="focus-input" data-placeholder="Email"></span>
+			<LayoutComponents>
+				<div className="login-form-title-description">
+					<h1>Olá, 👋 </h1>
+					<p>
+						Faça login para começar a<br /> gerenciar seus produtos.
+					</p>
 				</div>
-
-				{errors.email?.message && (
-					<div className="input-error">
-						<span>{errors.email?.message}</span>
+				<form onSubmit={handleSubmit(handleSignIn)} className="login-form">
+					<div className="wrap-input">
+						<span>Email</span>
+						<input
+							placeholder="seuemail@email.com"
+							className={email !== "" ? "has-value input" : "input"}
+							{...register("email")}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
 					</div>
-				)}
 
-				<div className="wrap-input">
-					<input
-						type="password"
-						className={password !== "" ? "has-value input" : "input"}
-						{...register("password")}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-					<span className="focus-input" data-placeholder="Senha"></span>
-				</div>
+					{errors.email?.message && (
+						<div className="input-error">
+							<span>{errors.email?.message}</span>
+						</div>
+					)}
 
-				{errors.password?.message && (
-					<div className="input-error">
-						<span>{errors.password?.message}</span>
+					<div className="wrap-input">
+						<span>Senha</span>
+						<input
+							placeholder="Digite sua senha..."
+							type="password"
+							className={password !== "" ? "has-value input" : "input"}
+							{...register("password")}
+							onChange={(e) => setPassword(e.target.value)}
+						/>
 					</div>
-				)}
 
-				<div className="container-login-form-btn">
+					{errors.password?.message && (
+						<div className="input-error">
+							<span>{errors.password?.message}</span>
+						</div>
+					)}
+
 					<Button type="submit" className="login-form-btn">
-						Entrar
+						Login
 					</Button>
+				</form>
+
+				<div className="line-container">
+					<span className="line-text">Ou</span>
 				</div>
 
-				<div className="text-center">
+				<div className="account">
+					Não possui conta?
 					<Link to="/register" className="link-password">
-						Criar Conta
+						Cadastre-se
 					</Link>
+					<div className="logo-image-footer">
+						<img src={Logo} alt="Jovem Programador" />
+					</div>
 				</div>
-			</form>
+			</LayoutComponents>
 		);
 	}
-}
+};

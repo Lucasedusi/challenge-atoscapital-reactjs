@@ -1,15 +1,15 @@
 // src/components/RegisterForm.js
-import React, { useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {
-	FormControl,
-	FormLabel,
-	Input,
-	Button,
-	Stack,
-	FormErrorMessage,
-} from "@chakra-ui/react";
 import { Api } from "../../services/api";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Logo from "../../assets/logo.svg";
+
+import { Link } from "react-router-dom";
+import { Button } from "../../components/ButtonComponent";
+import { LayoutComponents } from "../../components/LayoutComponents";
 
 interface User {
 	name: string;
@@ -17,14 +17,27 @@ interface User {
 	password: string;
 }
 
-const RegisterPage = () => {
+const userSchema = yup.object().shape({
+	name: yup.string().required("Nome Obrigatório"),
+	email: yup.string().required("E-mail Obrigatório").email("E-mail Inválido"),
+	password: yup
+		.string()
+		.required("Senha Obrigatória")
+		.min(6, "Mínimo 6 caracteres"),
+});
+
+export const RegisterPage = () => {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const { register, handleSubmit } = useForm<User>();
+	const { register, handleSubmit, formState } = useForm<User>({
+		resolver: yupResolver(userSchema),
+	});
 
-	const onSubmit: SubmitHandler<User> = async () => {
+	const { errors } = formState;
+
+	const handleCreateUser: SubmitHandler<User> = async () => {
 		try {
 			const data = {
 				name: name,
@@ -39,40 +52,82 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<Stack spacing={4}>
-				<FormControl id="name">
-					<FormLabel>Nome</FormLabel>
-					<Input
-						type="text"
-						{...register("name", { required: "Email é obrigatório" })}
-						onChange={(e) => setName(e.target.value)}
-					/>
-					<FormErrorMessage></FormErrorMessage>
-				</FormControl>
-				<FormControl id="email">
-					<FormLabel>Email</FormLabel>
-					<Input
-						type="email"
-						{...register("email", { required: "Email é obrigatório" })}
+		<LayoutComponents>
+			<div className="login-form-title-description">
+				<h1>Cadastre-se</h1>
+				<p>
+					Preencha os campos para concluir <br /> seu cadastro
+				</p>
+			</div>
+			<form onSubmit={handleSubmit(handleCreateUser)} className="login-form">
+				<div className="wrap-input">
+					<span>Nome</span>
+					<input
+						placeholder="Informe seu nome"
+						className={email !== "" ? "has-value input" : "input"}
+						{...register("email")}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
-					<FormErrorMessage></FormErrorMessage>
-				</FormControl>
-				<FormControl id="password">
-					<FormLabel>Senha</FormLabel>
-					<Input
+				</div>
+
+				{errors.email?.message && (
+					<div className="input-error">
+						<span>{errors.email?.message}</span>
+					</div>
+				)}
+
+				<div className="wrap-input">
+					<span>Email</span>
+					<input
+						placeholder="seuemail@email.com"
+						className={email !== "" ? "has-value input" : "input"}
+						{...register("email")}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
+				</div>
+
+				{errors.email?.message && (
+					<div className="input-error">
+						<span>{errors.email?.message}</span>
+					</div>
+				)}
+
+				<div className="wrap-input">
+					<span>Senha</span>
+					<input
+						placeholder="Digite sua senha..."
 						type="password"
-						{...register("password", { required: "Senha é obrigatória" })}
+						className={password !== "" ? "has-value input" : "input"}
+						{...register("password")}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<FormErrorMessage></FormErrorMessage>
-				</FormControl>
-				<Button type="submit" colorScheme="blue">
-					Cadastrar
+				</div>
+
+				{errors.password?.message && (
+					<div className="input-error">
+						<span>{errors.password?.message}</span>
+					</div>
+				)}
+
+				<Button type="submit" className="login-form-btn">
+					Login
 				</Button>
-			</Stack>
-		</form>
+			</form>
+
+			<div className="line-container">
+				<span className="line-text">Ou</span>
+			</div>
+
+			<div className="account">
+				Não possui conta?
+				<Link to="/register" className="link-password">
+					Cadastre-se
+				</Link>
+				<div className="logo-image-footer">
+					<img src={Logo} alt="Jovem Programador" />
+				</div>
+			</div>
+		</LayoutComponents>
 	);
 };
 

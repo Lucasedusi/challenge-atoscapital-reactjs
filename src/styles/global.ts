@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, input, textarea, button {
+  body, input, textarea {
     font-family: ${({ theme }) => theme.fonts.regular};
     font-weight: 400;
     font-size: ${({ theme }) => theme.textSizes["text-regular-m"]}

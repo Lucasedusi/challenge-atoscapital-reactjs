@@ -1,141 +1,94 @@
-.login-form-title {
+.login-form-title-description {
 	display: flex;
-	justify-content: center;
-	font-size: 30px;
-	font-weight: 700;
-	color: azure;
+	flex-direction: column;
+	gap: 20px;
 
-	line-height: 1.2;
-	text-align: center;
-	margin-bottom: 36px;
-}
+	h1 {
+		font-family: "Poppins", sans-serif;
+		font-size: 36px;
+		color: #0c1421;
+		font-weight: 400;
+	}
 
-.login-form-title img {
-	width: 25%;
-	height: 0%;
+	p {
+		font-family: "Poppins", sans-serif;
+		font-size: 20px;
+		color: #313957;
+		font-weight: 400;
+	}
 }
 
 .login-form {
 	width: 100%;
-
-	display: block;
-	font-size: 30px;
-	color: azure;
-
-	line-height: 1.2;
-	text-align: left;
+	margin: 38px 0;
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
 }
 
 .wrap-input {
-	width: 100%;
-	position: relative;
-	border-bottom: 2px solid #adadad;
-	margin-bottom: 36px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	span {
+		font-size: 16px;
+		font-weight: 400;
+		color: #0c1421;
+	}
 }
 
 .input {
 	font-size: 15px;
-	color: #fff;
-	line-height: 1.2;
-	border: none;
-	display: block;
+	color: #8897ad;
 	font-weight: 600;
+	border: 1px solid #d4d7e3;
+	border-radius: 12px;
 
 	width: 100%;
 	height: 45px;
-	background-color: transparent;
+	background-color: #f7fbff;
 	padding: 0 5px;
 }
 
-.focus-input {
-	display: block;
-	width: 100%;
-	height: 100%;
-
-	top: 0;
-	left: 0;
-	pointer-events: none;
-	color: #adadad;
+input::placeholder {
+	padding: 0 0 0 5px;
+	font-weight: 200;
+	color: #8897ad;
 }
-.focus-input::before {
+
+.line-container {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	margin: 40px 0 0 0;
+}
+
+.line-container::before,
+.line-container::after {
 	content: "";
-	display: block;
-	position: absolute;
-	bottom: -2px;
-	left: 0;
-	width: 0;
-	height: 2px;
-
-	-webkit-transition: all 0.4s;
-	-o-transition: all 0.4s;
-	-moz-transition: all 0.4s;
-
-	background: -webkit-linear-gradient(to right, #213656, #901541);
-	background: -o-linear-gradient(to right, #213656, #901541);
-	background: -moz-linear-gradient(to right, #213656, #901541);
-	background: linear-gradient(to right, #213656, #901541);
+	flex: 1;
+	border-bottom: 1px solid #cfdfe2;
 }
 
-.focus-input::after {
-	font-size: 15px;
-	color: #999;
-	line-height: 1.2;
-
-	content: attr(data-placeholder);
-
-	display: block;
-	width: 100%;
-	position: absolute;
-	top: 16px;
-	left: 0px;
-
-	padding-left: 5px;
-
-	-webkit-transition: all 0.4s;
-	-o-transition: all 0.4s;
-	-moz-transition: all 0.4s;
+.line-text {
+	padding: 0 10px;
+	color: #294957;
 }
 
-.input:focus {
-	outline: 0;
-}
-
-.input:focus + .focus-input::after {
-	top: -15px;
-}
-
-.input:focus + .focus-input::before {
-	width: 100%;
-}
-
-.has-value + .focus-input::after {
-	top: -15px;
-}
-
-.has-value + .focus-input::after {
-	width: 100%;
-}
-
-.text-center {
+.account {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	margin-top: 30px;
-
-	svg {
-		margin: 0 5px;
-	}
-}
-
-.label-password {
-	color: #adadad;
-	line-height: 1.5;
+	color: #313a57;
+	margin: 35px 0 0 0;
+	font-size: 18px;
 }
 
 .link-password {
-	color: #eee;
-	font-size: 17px;
+	color: #1e4ae9;
+	margin-left: 3px;
+	font-size: 18px;
 	line-height: 1.5;
 	text-decoration: none;
 	cursor: pointer;
@@ -147,13 +100,20 @@
 	}
 }
 
+.logo-image-footer {
+	display: flex;
+	justify-content: center;
+	position: fixed;
+	bottom: 12px;
+}
+
 .input-error {
 	display: flex;
-	margin: -25px 0 30px 0;
+	margin: -55px 5px 13px 0;
 	justify-content: flex-end;
 
 	span {
-		font-size: 14px;
+		font-size: 12px;
 		color: #edf2f7;
 		background-color: #f56565;
 		border-radius: 5px;
