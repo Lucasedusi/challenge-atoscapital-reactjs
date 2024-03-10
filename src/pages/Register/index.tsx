@@ -40,7 +40,7 @@ export const RegisterPage = () => {
 	const [password, setPassword] = useState("");
 	const [confirPassword, setConfirPassword] = useState("");
 
-	const { register, handleSubmit, formState } = useForm<User>({
+	const { register, handleSubmit, formState, clearErrors } = useForm<User>({
 		resolver: yupResolver(userSchema),
 	});
 
@@ -74,8 +74,8 @@ export const RegisterPage = () => {
 				<div className="wrap-input">
 					<span>Nome</span>
 					<input
-						placeholder="Informe seu nome"
 						className={name !== "" ? "has-value input" : "input"}
+						placeholder="Informe seu nome"
 						{...register("name")}
 						onChange={(e) => setName(e.target.value)}
 					/>
@@ -90,6 +90,7 @@ export const RegisterPage = () => {
 				<div className="wrap-input">
 					<span>Email</span>
 					<input
+						onFocus={() => clearErrors("email")}
 						placeholder="seuemail@email.com"
 						className={email !== "" ? "has-value input" : "input"}
 						{...register("email")}
@@ -106,6 +107,7 @@ export const RegisterPage = () => {
 				<div className="wrap-input">
 					<span>Senha</span>
 					<input
+						onFocus={() => clearErrors("password")}
 						placeholder="Digite sua senha..."
 						type="password"
 						className={password !== "" ? "has-value input" : "input"}
@@ -123,6 +125,7 @@ export const RegisterPage = () => {
 				<div className="wrap-input">
 					<span>Confirme a Senha</span>
 					<input
+						onFocus={() => clearErrors("confirPassword")}
 						placeholder="Confirme a senha..."
 						type="password"
 						className={confirPassword !== "" ? "has-value input" : "input"}
