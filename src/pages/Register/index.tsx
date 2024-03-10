@@ -1,4 +1,3 @@
-// src/components/RegisterForm.js
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Api } from "../../services/api";
@@ -152,5 +151,3 @@ export const RegisterPage = () => {
 		</LayoutComponents>
 	);
 };
-
-export default RegisterPage;
