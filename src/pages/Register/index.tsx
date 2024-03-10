@@ -7,14 +7,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Logo from "../../assets/logo.svg";
 
-import { Link } from "react-router-dom";
 import { Button } from "../../components/ButtonComponent";
 import { LayoutComponents } from "../../components/LayoutComponents";
+
+import { useNavigate } from "react-router-dom";
+import "./styles.scss";
 
 interface User {
 	name: string;
 	email: string;
 	password: string;
+	confirPassword: string;
 }
 
 const userSchema = yup.object().shape({
@@ -23,19 +26,27 @@ const userSchema = yup.object().shape({
 	password: yup
 		.string()
 		.required("Senha Obrigatória")
-		.min(6, "Mínimo 6 caracteres"),
+		.min(2, "Mínimo 2 caracteres"),
+	confirPassword: yup
+		.string()
+		.required("Confirmação de Senha Obrigatória")
+		.min(2, "Mínimo 2 caracteres")
+		.oneOf([yup.ref("password")], "As senhas precisam ser iguais"),
 });
 
 export const RegisterPage = () => {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [confirPassword, setConfirPassword] = useState("");
 
 	const { register, handleSubmit, formState } = useForm<User>({
 		resolver: yupResolver(userSchema),
 	});
 
 	const { errors } = formState;
+
+	const navigate = useNavigate();
 
 	const handleCreateUser: SubmitHandler<User> = async () => {
 		try {
@@ -46,6 +57,8 @@ export const RegisterPage = () => {
 			};
 
 			await Api.post("create", data);
+
+			navigate("/");
 		} catch (error) {
 			console.error("Erro ao cadastrar usuário:", error);
 		}
@@ -53,26 +66,24 @@ export const RegisterPage = () => {
 
 	return (
 		<LayoutComponents>
-			<div className="login-form-title-description">
+			<div className="register-form-title-description">
 				<h1>Cadastre-se</h1>
-				<p>
-					Preencha os campos para concluir <br /> seu cadastro
-				</p>
+				<p>Preencha os campos para concluir seu cadastro</p>
 			</div>
 			<form onSubmit={handleSubmit(handleCreateUser)} className="login-form">
 				<div className="wrap-input">
 					<span>Nome</span>
 					<input
 						placeholder="Informe seu nome"
-						className={email !== "" ? "has-value input" : "input"}
-						{...register("email")}
-						onChange={(e) => setEmail(e.target.value)}
+						className={name !== "" ? "has-value input" : "input"}
+						{...register("name")}
+						onChange={(e) => setName(e.target.value)}
 					/>
 				</div>
 
-				{errors.email?.message && (
+				{errors.name?.message && (
 					<div className="input-error">
-						<span>{errors.email?.message}</span>
+						<span>{errors.name?.message}</span>
 					</div>
 				)}
 
@@ -109,20 +120,28 @@ export const RegisterPage = () => {
 					</div>
 				)}
 
+				<div className="wrap-input">
+					<span>Confirme a Senha</span>
+					<input
+						placeholder="Confirme a senha..."
+						type="password"
+						className={confirPassword !== "" ? "has-value input" : "input"}
+						{...register("confirPassword")}
+						onChange={(e) => setConfirPassword(e.target.value)}
+					/>
+				</div>
+
+				{errors.confirPassword?.message && (
+					<div className="input-error">
+						<span>{errors.confirPassword?.message}</span>
+					</div>
+				)}
+
 				<Button type="submit" className="login-form-btn">
 					Login
 				</Button>
 			</form>
-
-			<div className="line-container">
-				<span className="line-text">Ou</span>
-			</div>
-
-			<div className="account">
-				Não possui conta?
-				<Link to="/register" className="link-password">
-					Cadastre-se
-				</Link>
+			<div className="footer">
 				<div className="logo-image-footer">
 					<img src={Logo} alt="Jovem Programador" />
 				</div>

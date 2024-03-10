@@ -25,7 +25,7 @@ const loginSchema = yup.object().shape({
 	password: yup
 		.string()
 		.required("Senha Obrigatória")
-		.min(6, "E-mail ou Senha inválidos"),
+		.min(2, "E-mail ou Senha inválidos"),
 });
 
 export const LoginPage = () => {

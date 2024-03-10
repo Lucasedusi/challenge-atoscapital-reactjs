@@ -1,7 +1,10 @@
-import { createContext, useState, useEffect, ReactNode } from "react";
 import { useToast } from "@chakra-ui/react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { Api } from "../../services/api";
 import { AuthContextData, IUser } from "./types";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AuthContext = createContext<AuthContextData>(
 	{} as AuthContextData
@@ -78,6 +81,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 			}}
 		>
 			{children}
+			<ToastContainer />
 		</AuthContext.Provider>
 	);
 };
