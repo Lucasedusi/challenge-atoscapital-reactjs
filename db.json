@@ -1,19 +1,31 @@
 {
-  "login": [
+  "products": [
     {
       "id": 1,
-      "email": "user1",
-      "password": "password1"
+      "product": "Product001",
+      "category": "Categoria 01",
+      "codProduct": "0001",
+      "priceProduto": 10.4,
+      "dateCadastro": "2024-02-26T21:46:00",
+      "qtdProduto": 1000
     },
     {
       "id": 2,
-      "email": "user2",
-      "password": "password2"
+      "product": "Produto teste",
+      "category": "Eletrônico",
+      "codProduct": "002",
+      "priceProduto": "120",
+      "dateCadastro": "2024-03-11T21:53:23.647Z",
+      "qtdProduto": "20"
     },
     {
-      "email": "dsds",
-      "password": "cityslicka",
-      "id": 3
+      "id": 3,
+      "product": "",
+      "category": "",
+      "codProduct": "",
+      "priceProduto": "12,90",
+      "dateCadastro": "2024-03-11T21:55:55.760Z",
+      "qtdProduto": ""
     }
   ]
 }

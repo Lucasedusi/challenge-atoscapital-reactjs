@@ -1,27 +1,33 @@
 import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
 import "./styles.scss";
 
-const products = [
-	{
-		descricao: "Produto 01",
-		categoria: "Hello World",
-		dataCadastro: "Março 2024",
-		codigoProduto: "0003",
-		preco: 12.5,
-	},
-	{
-		descricao: "Produto 01",
-		categoria: "Hello World",
-		dataCadastro: "Março 2024",
-		codigoProduto: "0003",
-		preco: 12.5,
-	},
-];
+interface IProducts {
+	product: string;
+	category: string;
+	codProduct: string;
+	priceProduto: number;
+	dateCadastro: Date;
+	qtdProduto: number;
+}
 
 export const HomePage = () => {
+	const [products, setProducts] = useState<IProducts[]>([]);
+
+	useEffect(() => {
+		const getUser = async () => {
+			const response = await axios.get("http://localhost:3001/products");
+
+			setProducts(response.data);
+		};
+
+		getUser();
+	}, []);
+
 	return (
 		<div>
 			<div className="container-welcome">
@@ -73,11 +79,11 @@ export const HomePage = () => {
 				<tbody>
 					{products.map((item) => (
 						<tr>
-							<td>{item.descricao}</td>
-							<td>{item.categoria}</td>
-							<td>{item.dataCadastro}</td>
-							<td>{item.codigoProduto}</td>
-							<td>{item.preco}</td>
+							<td>{item.product}</td>
+							<td>{item.category}</td>
+							<td>12/12/2024</td>
+							<td>{item.codProduct}</td>
+							<td>{item.priceProduto}</td>
 							<td className="actions">
 								<button className="edit-button">
 									<FaRegEdit size={12} color="#fff" /> Editar
