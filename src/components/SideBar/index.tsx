@@ -1,15 +1,16 @@
+import { BsFillBagCheckFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+
 import "./styles.scss";
 
 export const SideBar = () => {
 	return (
 		<div className="sidebar">
-			<div className="logo">
-				<img src="logo.svg" alt="Logo da empresa" />
-			</div>
 			<div className="navigation">
-				<ul>
-					<li>PRODUTOS</li>
-				</ul>
+				<Link className="text-navigation" to={"/dash"}>
+					<BsFillBagCheckFill size={20} color="#89131D" />
+					Produtos
+				</Link>
 			</div>
 		</div>
 	);
