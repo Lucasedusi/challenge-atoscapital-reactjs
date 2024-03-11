@@ -6,8 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Logo from "../../assets/logo.svg";
 
-import { Button } from "../../components/ButtonComponent";
-import { LayoutComponents } from "../../components/LayoutComponents";
+import { AuthLayout } from "../../components/AuthLayout";
+import { Button } from "../../components/Button";
 
 import { useNavigate } from "react-router-dom";
 import "./styles.scss";
@@ -64,7 +64,7 @@ export const RegisterPage = () => {
 	};
 
 	return (
-		<LayoutComponents>
+		<AuthLayout>
 			<div className="register-form-title-description">
 				<h1>Cadastre-se</h1>
 				<p>Preencha os campos para concluir seu cadastro</p>
@@ -145,9 +145,9 @@ export const RegisterPage = () => {
 			</form>
 			<div className="footer">
 				<div className="logo-image-footer">
-					<img src={Logo} alt="Jovem Programador" />
+					<img src={Logo} alt="Logo Atos Capital" />
 				</div>
 			</div>
-		</LayoutComponents>
+		</AuthLayout>
 	);
 };

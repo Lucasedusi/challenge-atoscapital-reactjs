@@ -6,9 +6,7 @@ interface ILayoutComponentsProps {
 	children: ReactNode;
 }
 
-export const LayoutComponents: React.FC<ILayoutComponentsProps> = ({
-	children,
-}) => {
+export const AuthLayout: React.FC<ILayoutComponentsProps> = ({ children }) => {
 	return (
 		<div className="container">
 			<div className="container-login">

@@ -5,11 +5,11 @@ import * as yup from "yup";
 
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LayoutComponents } from "../../components/LayoutComponents";
+import { AuthLayout } from "../../components/AuthLayout";
 import { AuthContext } from "../../context/AuthProvider";
 
 import Logo from "../../assets/logo.svg";
-import { Button } from "../../components/ButtonComponent";
+import { Button } from "../../components/Button";
 import "./style.scss";
 
 interface User {
@@ -55,7 +55,7 @@ export const LoginPage = () => {
 		return navigate("/home");
 	} else {
 		return (
-			<LayoutComponents>
+			<AuthLayout>
 				<div className="login-form-title-description">
 					<h1>Olá, 👋 </h1>
 					<p>
@@ -114,7 +114,7 @@ export const LoginPage = () => {
 						<img src={Logo} alt="Jovem Programador" />
 					</div>
 				</div>
-			</LayoutComponents>
+			</AuthLayout>
 		);
 	}
 };

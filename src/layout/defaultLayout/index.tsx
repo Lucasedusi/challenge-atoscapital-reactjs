@@ -1,13 +1,22 @@
 import { Outlet } from "react-router-dom";
-import { LayoutComponents } from "../../components/LayoutComponents";
 
+import { Header } from "../../components/Header";
+import { MainLayout } from "../../components/MainLayout";
+import { SideBar } from "../../components/SideBar";
 import "./styles.scss";
 
-export const DefautlLayout = () => {
+export const DefaultLayout = () => {
 	return (
-		<LayoutComponents>
-			<p>HEADER</p>
-			<Outlet />
-		</LayoutComponents>
+		<MainLayout>
+			<div className="header">
+				<Header />
+			</div>
+			<div className="container">
+				<SideBar />
+				<div className="outlet">
+					<Outlet />
+				</div>
+			</div>
+		</MainLayout>
 	);
 };
