@@ -1,4 +1,4 @@
-import React, { ReactNode, ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, ReactNode } from "react";
 import "./styles.scss";
 
 interface ILayoutComponentsProps
@@ -11,7 +11,7 @@ export const Button: React.FC<ILayoutComponentsProps> = ({
 	...rest
 }) => {
 	return (
-		<button type="button" {...rest}>
+		<button className="btnPrimary" type="button" {...rest}>
 			{children}
 		</button>
 	);

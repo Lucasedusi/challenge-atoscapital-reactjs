@@ -150,9 +150,9 @@ export const HomePage = () => {
 									<td>{product.codProduct}</td>
 									<td>{product.priceProduto}</td>
 									<td className="actions">
-										<button className="edit-button">
+										<Link className="edit-button" to={`/${product.id}/edit`}>
 											<FaRegEdit size={12} color="#fff" /> Editar
-										</button>
+										</Link>
 										<button
 											type="button"
 											className="delete-button"
@@ -172,6 +172,7 @@ export const HomePage = () => {
 				<div className="confirmation-modal-container">
 					<div className="confirmation-modal">
 						<p>Deseja realmente excluir este produto?</p>
+						<button onClick={cancelDelete}>Cancelar</button>
 						<button
 							onClick={() => {
 								if (productIdToDelete !== null) {
@@ -181,7 +182,6 @@ export const HomePage = () => {
 						>
 							Sim
 						</button>
-						<button onClick={cancelDelete}>Cancelar</button>
 					</div>
 				</div>
 			)}
