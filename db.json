@@ -11,21 +11,12 @@
     },
     {
       "id": 2,
-      "product": "Produto teste",
-      "category": "Eletrônico",
-      "codProduct": "002",
-      "priceProduto": "120",
-      "dateCadastro": "2024-03-11T21:53:23.647Z",
-      "qtdProduto": "20"
-    },
-    {
-      "id": 3,
-      "product": "",
-      "category": "",
-      "codProduct": "",
-      "priceProduto": "12,90",
-      "dateCadastro": "2024-03-11T21:55:55.760Z",
-      "qtdProduto": ""
+      "product": "Celular",
+      "category": "eletronico",
+      "codProduct": "003",
+      "priceProduto": "210",
+      "dateCadastro": "2024-03-11T23:06:12.309Z",
+      "qtdProduto": "40"
     }
   ]
 }

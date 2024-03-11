@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "./styles.scss";
 
 interface IProducts {
+	id: number;
 	product: string;
 	category: string;
 	codProduct: string;
@@ -17,16 +18,49 @@ interface IProducts {
 
 export const HomePage = () => {
 	const [products, setProducts] = useState<IProducts[]>([]);
+	const [search, setSearch] = useState("");
+	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+	const [productIdToDelete, setProductIdToDelete] = useState<number | null>(
+		null
+	);
 
 	useEffect(() => {
-		const getUser = async () => {
+		const getProducts = async () => {
 			const response = await axios.get("http://localhost:3001/products");
 
 			setProducts(response.data);
 		};
 
-		getUser();
+		getProducts();
 	}, []);
+
+	const filteredProducts =
+		search.length > 0
+			? products.filter((product) => product.product.includes(search))
+			: [];
+
+	const confirmDelete = (id: number) => {
+		setProductIdToDelete(id);
+		setShowConfirmationModal(true);
+	};
+
+	const handleRemoveProduct = (id: number) => {
+		if (productIdToDelete !== null) {
+			axios.delete(`http://localhost:3001/products/${id}`);
+
+			const removeProduct = products.filter((product) => product.id !== id);
+
+			setProducts(removeProduct);
+
+			setShowConfirmationModal(false);
+			setProductIdToDelete(null);
+		}
+	};
+
+	const cancelDelete = () => {
+		setShowConfirmationModal(false);
+		setProductIdToDelete(null);
+	};
 
 	return (
 		<div>
@@ -58,7 +92,12 @@ export const HomePage = () => {
 						<div className="search-icon-products">
 							<IoMdSearch size={18} />
 						</div>
-						<input type="text" placeholder="Pesquisar..." />
+						<input
+							type="text"
+							placeholder="Pesquisar..."
+							onChange={(e) => setSearch(e.target.value)}
+							value={search}
+						/>
 					</div>
 				</div>
 
@@ -77,25 +116,75 @@ export const HomePage = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{products.map((item) => (
-						<tr>
-							<td>{item.product}</td>
-							<td>{item.category}</td>
-							<td>12/12/2024</td>
-							<td>{item.codProduct}</td>
-							<td>{item.priceProduto}</td>
-							<td className="actions">
-								<button className="edit-button">
-									<FaRegEdit size={12} color="#fff" /> Editar
-								</button>
-								<button className="delete-button">
-									<FaRegTrashAlt size={12} color="#fff" /> Excluir
-								</button>
-							</td>
-						</tr>
-					))}
+					{search.length > 0 ? (
+						<>
+							{filteredProducts.map((product) => (
+								<tr key={product.id}>
+									<td>{product.product}</td>
+									<td>{product.category}</td>
+									<td>12/12/2024</td>
+									<td>{product.codProduct}</td>
+									<td>{product.priceProduto}</td>
+									<td className="actions">
+										<button className="edit-button">
+											<FaRegEdit size={12} color="#fff" /> Editar
+										</button>
+										<button
+											type="button"
+											className="delete-button"
+											onClick={() => confirmDelete(product.id)}
+										>
+											<FaRegTrashAlt size={12} color="#fff" /> Excluir
+										</button>
+									</td>
+								</tr>
+							))}
+						</>
+					) : (
+						<>
+							{products.map((product) => (
+								<tr key={product.id}>
+									<td>{product.product}</td>
+									<td>{product.category}</td>
+									<td>12/12/2024</td>
+									<td>{product.codProduct}</td>
+									<td>{product.priceProduto}</td>
+									<td className="actions">
+										<button className="edit-button">
+											<FaRegEdit size={12} color="#fff" /> Editar
+										</button>
+										<button
+											type="button"
+											className="delete-button"
+											onClick={() => confirmDelete(product.id)}
+										>
+											<FaRegTrashAlt size={12} color="#fff" /> Excluir
+										</button>
+									</td>
+								</tr>
+							))}
+						</>
+					)}
 				</tbody>
 			</table>
+
+			{showConfirmationModal && (
+				<div className="confirmation-modal-container">
+					<div className="confirmation-modal">
+						<p>Deseja realmente excluir este produto?</p>
+						<button
+							onClick={() => {
+								if (productIdToDelete !== null) {
+									handleRemoveProduct(productIdToDelete);
+								}
+							}}
+						>
+							Sim
+						</button>
+						<button onClick={cancelDelete}>Cancelar</button>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
