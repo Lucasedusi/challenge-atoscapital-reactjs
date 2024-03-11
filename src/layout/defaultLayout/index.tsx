@@ -11,7 +11,7 @@ export const DefaultLayout = () => {
 			<div className="header">
 				<Header />
 			</div>
-			<div className="container">
+			<div className="main">
 				<SideBar />
 				<div className="outlet">
 					<Outlet />

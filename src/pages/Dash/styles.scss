@@ -1,0 +1,133 @@
+.container-add-products {
+	display: flex;
+	flex-direction: column;
+	margin: 10px 0;
+	padding: 0 0 0px 0;
+}
+
+.title-add-products {
+	display: flex;
+	align-items: center;
+	margin: 28px 0 42px 0;
+
+	h1 {
+		font-family: "Poppins", sans-serif;
+		font-weight: 700;
+		color: #151515;
+		font-size: 24px;
+	}
+}
+
+// CadastroForm.scss
+
+.form-container-inputs {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	width: 86%;
+}
+
+.form-title-subtitle {
+	gap: 8px;
+	display: flex;
+	flex-direction: column;
+	margin: 0 0 18px 0;
+
+	h2 {
+		font-family: "Poppins", sans-serif;
+		font-weight: 700;
+		color: #1a202c;
+		font-size: 20px;
+	}
+
+	p {
+		font-family: "Poppins", sans-serif;
+		font-weight: 500;
+		color: #90a3bf;
+		font-size: 14px;
+	}
+}
+
+.form-row {
+	display: flex;
+	justify-content: space-between;
+}
+
+.form-group {
+	flex: 0 0 48%;
+	margin-bottom: 20px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+	font-family: "Poppins", sans-serif;
+	font-weight: 600;
+	color: #1a202c;
+	font-size: 16px;
+}
+
+input {
+	background-color: #f6f7f9;
+	width: 100%;
+	padding: 8px;
+	border-radius: 10px;
+	border: none;
+	height: 56px;
+}
+
+.form-group input::placeholder {
+	color: #90a3bf;
+	font-size: 14px;
+	font-family: "Poppins", sans-serif;
+	font-weight: 500;
+}
+
+.container-title-confirm {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+	width: 86%;
+	margin: 20px 0;
+	border-radius: 10px;
+	padding: 20px;
+	background: #fff;
+}
+
+.subtitle-confirm {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+
+	h1 {
+		font-family: "Poppins", sans-serif;
+		font-weight: 600;
+		color: #1a202c;
+		font-size: 24px;
+	}
+
+	p {
+		font-family: "Poppins", sans-serif;
+		font-weight: 400;
+		color: #90a3bf;
+		font-size: 14px;
+	}
+}
+
+button.btn-add-product {
+	color: #fff;
+	font-weight: 600;
+	font-family: "Inter", sans-serif;
+	font-size: 14px;
+	background-color: #89131d;
+	padding: 14px 26px;
+	border-radius: 8px;
+	width: 140px;
+	height: 56px;
+
+	transition: filter 0.4s;
+
+	&:hover {
+		filter: brightness(0.9);
+	}
+}

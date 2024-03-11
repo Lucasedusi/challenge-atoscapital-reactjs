@@ -13,10 +13,10 @@ export const Header = () => {
 			</div>
 			<div className="main-search-bar">
 				<div className="search-bar">
-					<input type="text" placeholder="Pesquisar..." />
 					<div className="search-icon">
-						<IoMdSearch />
+						<IoMdSearch size={18} />
 					</div>
+					<input type="text" placeholder="Pesquisar..." />
 				</div>
 			</div>
 			<div className="group-info">
