@@ -30,10 +30,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [ViteJs](https://vitejs.dev/guide/)
 - [Styled-Components](https://styled-components.com/)
 
-<strong>Qual o motivo de usar Styled-Component?</strong>
-
-Facilidade na manutenção do código, tornando a semântica dos componentes muito óbvio, além disso a sua adaptação com as props facilita a utilização temas globais.
-
 ### Instalação do Back-end
 
 ```bash
