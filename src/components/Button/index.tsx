@@ -11,7 +11,7 @@ export const Button: React.FC<ILayoutComponentsProps> = ({
 	...rest
 }) => {
 	return (
-		<button className="btnPrimary" type="button" {...rest}>
+		<button className="btn-primary" type="button" {...rest}>
 			{children}
 		</button>
 	);

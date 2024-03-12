@@ -96,7 +96,7 @@ export const LoginPage = () => {
 						</div>
 					)}
 
-					<Button type="submit" className="login-form-btn">
+					<Button type="submit" className="btn-primary">
 						Login
 					</Button>
 				</form>

@@ -1,34 +1,49 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+
 import "./styles.scss";
 
 interface IProducts {
-	id: number;
 	product: string;
 	category: string;
 	codProduct: string;
-	priceProduto: number;
-	dateCadastro: Date;
+	priceProducts: number;
+	dateCadastro?: Date;
 	qtdProduto: number;
 }
 
-export const Dash = () => {
+const productsSchema = yup.object().shape({
+	product: yup.string().required("Campo Obrigatório"),
+	category: yup.string().required("Campo Obrigatório"),
+	codProduct: yup.string().required("Campo Obrigatório"),
+	priceProducts: yup.number().required("Campo Obrigatório"),
+	qtdProduto: yup.number().required("Campo Obrigatório"),
+});
+
+export const AddProducts = () => {
 	const [products, setProducts] = useState<IProducts[]>([]);
 
-	const { register, handleSubmit } = useForm<IProducts>();
+	const { register, handleSubmit, formState, clearErrors } = useForm<IProducts>(
+		{
+			resolver: yupResolver(productsSchema),
+		}
+	);
+
+	const { errors } = formState;
 
 	const navigate = useNavigate();
 
 	const addProducts: SubmitHandler<IProducts> = async (data) => {
 		try {
 			const newProduct: IProducts = {
-				id: data.id + 1,
 				product: data.product,
 				category: data.category,
 				codProduct: data.codProduct,
-				priceProduto: data.priceProduto,
+				priceProducts: data.priceProducts,
 				dateCadastro: new Date(),
 				qtdProduto: data.qtdProduto,
 			};
@@ -74,7 +89,13 @@ export const Dash = () => {
 									placeholder="Descrição do produto"
 									{...register("product")}
 								/>
+								{errors.product?.message && (
+									<div className="input-error">
+										<span>{errors.product?.message}</span>
+									</div>
+								)}
 							</div>
+
 							<div className="form-group">
 								<label htmlFor="categoria">Categoria:</label>
 								<input
@@ -82,6 +103,11 @@ export const Dash = () => {
 									placeholder="Categoria do produto"
 									{...register("category")}
 								/>
+								{errors.category?.message && (
+									<div className="input-error">
+										<span>{errors.category?.message}</span>
+									</div>
+								)}
 							</div>
 						</div>
 
@@ -93,13 +119,26 @@ export const Dash = () => {
 									placeholder="Código do produto"
 									{...register("codProduct")}
 								/>
+								{errors.codProduct?.message && (
+									<div className="input-error">
+										<span>{errors.codProduct?.message}</span>
+									</div>
+								)}
 							</div>
+
 							<div className="form-group">
 								<label htmlFor="codigoProduto">Valor:</label>
 								<input
+									type="number"
 									placeholder="Valor do Produto"
-									{...register("priceProduto")}
+									{...register("priceProducts")}
 								/>
+
+								{errors.priceProducts?.message && (
+									<div className="input-error">
+										<span>{errors.priceProducts?.message}</span>
+									</div>
+								)}
 							</div>
 						</div>
 
@@ -110,6 +149,12 @@ export const Dash = () => {
 								placeholder="Quantidade do produto"
 								{...register("qtdProduto")}
 							/>
+
+							{errors.qtdProduto?.message && (
+								<div className="input-error">
+									<span>{errors.qtdProduto?.message}</span>
+								</div>
+							)}
 						</div>
 					</div>
 

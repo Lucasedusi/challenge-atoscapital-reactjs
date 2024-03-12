@@ -23,12 +23,14 @@ export const HomePage = () => {
 	const [productIdToDelete, setProductIdToDelete] = useState<number | null>(
 		null
 	);
+	const [totalCadastros, setTotalCadastros] = useState<number>(0);
 
 	useEffect(() => {
 		const getProducts = async () => {
 			const response = await axios.get("http://localhost:3001/products");
 
 			setProducts(response.data);
+			setTotalCadastros(response.data.length);
 		};
 
 		getProducts();
@@ -51,6 +53,7 @@ export const HomePage = () => {
 			const removeProduct = products.filter((product) => product.id !== id);
 
 			setProducts(removeProduct);
+			setTotalCadastros(removeProduct.length);
 
 			setShowConfirmationModal(false);
 			setProductIdToDelete(null);
@@ -70,7 +73,7 @@ export const HomePage = () => {
 					<p>Seja bem-vindo</p>
 				</div>
 
-				<Link className="btn-add-product" to={"/dash"}>
+				<Link className="btn-add-product" to={"/addProducts"}>
 					+ Novo Produto
 				</Link>
 			</div>
@@ -81,7 +84,7 @@ export const HomePage = () => {
 				</div>
 
 				<div className="group-qtd-produtcs">
-					<p className="number-products">31</p>
+					<p className="number-products">{totalCadastros}</p>
 					<p className="text-products">Total de Cadastros</p>
 				</div>
 			</div>
@@ -109,7 +112,7 @@ export const HomePage = () => {
 					<tr>
 						<th>Descrição</th>
 						<th>Categoria</th>
-						<th>Data de Cadastro</th>
+						<th>Quantidade de Produtos</th>
 						<th>Cód do Produto</th>
 						<th>Preços</th>
 						<th>Ações</th>
@@ -122,7 +125,7 @@ export const HomePage = () => {
 								<tr key={product.id}>
 									<td>{product.product}</td>
 									<td>{product.category}</td>
-									<td>12/12/2024</td>
+									<td>{product.qtdProduto}</td>
 									<td>{product.codProduct}</td>
 									<td>{product.priceProduto}</td>
 									<td className="actions">
@@ -146,7 +149,7 @@ export const HomePage = () => {
 								<tr key={product.id}>
 									<td>{product.product}</td>
 									<td>{product.category}</td>
-									<td>12/12/2024</td>
+									<td>{product.qtdProduto}</td>
 									<td>{product.codProduct}</td>
 									<td>{product.priceProduto}</td>
 									<td className="actions">

@@ -7,7 +7,7 @@ export const SideBar = () => {
 	return (
 		<div className="sidebar">
 			<div className="navigation">
-				<Link className="text-navigation" to={"/dash"}>
+				<Link className="text-navigation" to={"/home"}>
 					<BsFillBagCheckFill size={20} color="#89131D" />
 					Produtos
 				</Link>

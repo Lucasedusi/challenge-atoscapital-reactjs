@@ -1,21 +1,29 @@
 {
   "products": [
     {
-      "product": "Notebook",
+      "product": "Notebook22222",
       "category": "Categoria 01",
-      "codProduct": "0001",
+      "codProduct": "00012",
       "priceProduto": 10.4,
-      "qtdProduto": "3332",
+      "qtdProduto": "33322",
       "id": 1
     },
     {
-      "id": 2,
-      "product": "Celular",
-      "category": "eletronico",
-      "codProduct": "003",
-      "priceProduto": "210",
-      "dateCadastro": "2024-03-11T23:06:12.309Z",
-      "qtdProduto": "40"
+      "product": "testdddddddd",
+      "category": "sss",
+      "codProduct": "112",
+      "priceProduto": 120,
+      "qtdProduto": 11,
+      "dateCadastro": "",
+      "id": 2
+    },
+    {
+      "product": "test",
+      "category": "te",
+      "codProduct": "002",
+      "priceProduto": "22",
+      "qtdProduto": 22,
+      "id": 3
     }
   ]
 }

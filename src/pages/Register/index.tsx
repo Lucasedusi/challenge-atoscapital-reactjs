@@ -139,8 +139,8 @@ export const RegisterPage = () => {
 					</div>
 				)}
 
-				<Button type="submit" className="login-form-btn">
-					Login
+				<Button type="submit" className="btn-primary">
+					Cadastre-se
 				</Button>
 			</form>
 			<div className="footer">

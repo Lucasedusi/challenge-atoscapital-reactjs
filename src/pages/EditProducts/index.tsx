@@ -124,7 +124,7 @@ export const EditProducts = () => {
 							<p>Confira os dados informados antes de cadastrar o produto</p>
 						</div>
 
-						<button className="btn-add-product">Cadastrar</button>
+						<button className="btn-add-product">Editar</button>
 					</div>
 				</form>
 			</div>
