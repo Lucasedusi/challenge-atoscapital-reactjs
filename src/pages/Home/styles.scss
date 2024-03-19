@@ -239,3 +239,35 @@ td.actions {
 	background-color: #dc3545;
 	color: #fff;
 }
+
+.category-filter {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+
+	select {
+		border: none;
+		padding: 6px;
+		border-radius: 4px;
+	}
+
+	p {
+		font-size: 12px;
+		color: #666666;
+		font-weight: 500;
+	}
+}
+
+.group-filters {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.empty {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin: 32px 0;
+}

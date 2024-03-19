@@ -1,20 +1,12 @@
 import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
+import { TbClipboardText } from "react-icons/tb";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { IProducts } from "../../@types/Products";
 import "./styles.scss";
-
-interface IProducts {
-	id: number;
-	product: string;
-	category: string;
-	codProduct: string;
-	priceProduto: number;
-	dateCadastro: Date;
-	qtdProduto: number;
-}
 
 export const HomePage = () => {
 	const [products, setProducts] = useState<IProducts[]>([]);
@@ -24,6 +16,8 @@ export const HomePage = () => {
 		null
 	);
 	const [totalCadastros, setTotalCadastros] = useState<number>(0);
+	const [selectedCategory, setSelectedCategory] = useState("Todas");
+	const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
 	useEffect(() => {
 		const getProducts = async () => {
@@ -36,10 +30,26 @@ export const HomePage = () => {
 		getProducts();
 	}, []);
 
+	const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setSelectedCategory(e.target.value);
+	};
+
+	const handleItemsPerPageChange = (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		setItemsPerPage(Number(e.target.value));
+	};
+
 	const filteredProducts =
 		search.length > 0
-			? products.filter((product) => product.product.includes(search))
-			: [];
+			? products.filter((product) =>
+					product.product.toLowerCase().includes(search.toLowerCase())
+			  )
+			: selectedCategory === "Todas"
+			? products.slice(0, itemsPerPage)
+			: products
+					.filter((product) => product.category === selectedCategory)
+					.slice(0, itemsPerPage);
 
 	const confirmDelete = (id: number) => {
 		setProductIdToDelete(id);
@@ -63,6 +73,20 @@ export const HomePage = () => {
 	const cancelDelete = () => {
 		setShowConfirmationModal(false);
 		setProductIdToDelete(null);
+	};
+
+	const formattedDate = (date: Date | string | undefined): string => {
+		if (!date) return "";
+
+		if (typeof date === "string") {
+			date = new Date(date);
+		}
+
+		if (date instanceof Date && !isNaN(date.getTime())) {
+			return date.toLocaleDateString("pt-BR");
+		} else {
+			return "";
+		}
 	};
 
 	return (
@@ -104,7 +128,28 @@ export const HomePage = () => {
 					</div>
 				</div>
 
-				<p className="text-update">Última atualização: 10 de Março 10:45 AM</p>
+				<div className="group-filters">
+					<div className="category-filter">
+						<p>Filtrar por categoria:</p>
+						<select value={selectedCategory} onChange={handleCategoryChange}>
+							<option value="Todas">Todas</option>
+							<option value="Alimentos">Alimentos</option>
+							<option value="Laptops">Laptops</option>
+							<option value="Livros">Livros</option>
+							<option value="Ensino">Ensino</option>
+						</select>
+					</div>
+
+					<div className="category-filter">
+						<p>Itens por página:</p>
+						<select value={itemsPerPage} onChange={handleItemsPerPageChange}>
+							<option value="10">Todos</option>
+							<option value="1">1</option>
+							<option value="3">3</option>
+							<option value="5">5</option>
+						</select>
+					</div>
+				</div>
 			</div>
 
 			<table className="custom-table">
@@ -115,11 +160,20 @@ export const HomePage = () => {
 						<th>Quantidade de Produtos</th>
 						<th>Cód do Produto</th>
 						<th>Preços</th>
+						<th>Data</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					{search.length > 0 ? (
+					{filteredProducts.length === 0 ? (
+						<section className="empty">
+							<TbClipboardText size={50} color="#666666" />
+
+							<div>
+								<p>Nenhum produto encontrado</p>
+							</div>
+						</section>
+					) : (
 						<>
 							{filteredProducts.map((product) => (
 								<tr key={product.id}>
@@ -127,31 +181,8 @@ export const HomePage = () => {
 									<td>{product.category}</td>
 									<td>{product.qtdProduto}</td>
 									<td>{product.codProduct}</td>
-									<td>{product.priceProduto}</td>
-									<td className="actions">
-										<button className="edit-button">
-											<FaRegEdit size={12} color="#fff" /> Editar
-										</button>
-										<button
-											type="button"
-											className="delete-button"
-											onClick={() => confirmDelete(product.id)}
-										>
-											<FaRegTrashAlt size={12} color="#fff" /> Excluir
-										</button>
-									</td>
-								</tr>
-							))}
-						</>
-					) : (
-						<>
-							{products.map((product) => (
-								<tr key={product.id}>
-									<td>{product.product}</td>
-									<td>{product.category}</td>
-									<td>{product.qtdProduto}</td>
-									<td>{product.codProduct}</td>
-									<td>{product.priceProduto}</td>
+									<td>{product.priceProducts}</td>
+									<td>{formattedDate(product.dateCadastro)}</td>
 									<td className="actions">
 										<Link className="edit-button" to={`/${product.id}/edit`}>
 											<FaRegEdit size={12} color="#fff" /> Editar

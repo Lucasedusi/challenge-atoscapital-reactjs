@@ -2,17 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import "./styles.scss";
+import { IProducts } from "../../@types/Products";
 
-interface IProducts {
-	id: number;
-	product: string;
-	category: string;
-	codProduct: string;
-	priceProduto: number;
-	dateCadastro: Date;
-	qtdProduto: number;
-}
+import "./styles.scss";
 
 export const EditProducts = () => {
 	const [products, setProducts] = useState();
@@ -31,8 +23,9 @@ export const EditProducts = () => {
 			setValue("product", response.data.product);
 			setValue("category", response.data.category);
 			setValue("codProduct", response.data.codProduct);
-			setValue("priceProduto", response.data.priceProduto);
+			setValue("priceProducts", response.data.priceProducts);
 			setValue("qtdProduto", response.data.qtdProduto);
+			setValue("dateCadastro", response.data.dateCadastro);
 		};
 
 		getProducts();
@@ -103,7 +96,7 @@ export const EditProducts = () => {
 								<label htmlFor="codigoProduto">Valor:</label>
 								<input
 									placeholder="Valor do Produto"
-									{...register("priceProduto")}
+									{...register("priceProducts")}
 								/>
 							</div>
 						</div>

@@ -5,16 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
+import { IProductsAdd } from "../../@types/Products";
 import "./styles.scss";
-
-interface IProducts {
-	product: string;
-	category: string;
-	codProduct: string;
-	priceProducts: number;
-	dateCadastro?: Date;
-	qtdProduto: number;
-}
 
 const productsSchema = yup.object().shape({
 	product: yup.string().required("Campo Obrigatório"),
@@ -25,21 +17,19 @@ const productsSchema = yup.object().shape({
 });
 
 export const AddProducts = () => {
-	const [products, setProducts] = useState<IProducts[]>([]);
+	const [products, setProducts] = useState<IProductsAdd[]>([]);
 
-	const { register, handleSubmit, formState, clearErrors } = useForm<IProducts>(
-		{
-			resolver: yupResolver(productsSchema),
-		}
-	);
+	const { register, handleSubmit, formState } = useForm<IProductsAdd>({
+		resolver: yupResolver(productsSchema),
+	});
 
 	const { errors } = formState;
 
 	const navigate = useNavigate();
 
-	const addProducts: SubmitHandler<IProducts> = async (data) => {
+	const addProducts: SubmitHandler<IProductsAdd> = async (data) => {
 		try {
-			const newProduct: IProducts = {
+			const newProduct: IProductsAdd = {
 				product: data.product,
 				category: data.category,
 				codProduct: data.codProduct,
@@ -48,7 +38,10 @@ export const AddProducts = () => {
 				qtdProduto: data.qtdProduto,
 			};
 
-			await axios.post<IProducts>("http://localhost:3001/products", newProduct);
+			await axios.post<IProductsAdd>(
+				"http://localhost:3001/products",
+				newProduct
+			);
 
 			setProducts([...products, newProduct]);
 		} catch (error) {
@@ -83,7 +76,7 @@ export const AddProducts = () => {
 
 						<div className="form-row">
 							<div className="form-group">
-								<label htmlFor="descricao">Descrição:</label>
+								<label>Descrição:</label>
 								<input
 									type="text"
 									placeholder="Descrição do produto"
@@ -97,7 +90,7 @@ export const AddProducts = () => {
 							</div>
 
 							<div className="form-group">
-								<label htmlFor="categoria">Categoria:</label>
+								<label>Categoria:</label>
 								<input
 									type="text"
 									placeholder="Categoria do produto"
@@ -113,7 +106,7 @@ export const AddProducts = () => {
 
 						<div className="form-row">
 							<div className="form-group">
-								<label htmlFor="dataCadastro">Código</label>
+								<label>Código</label>
 								<input
 									type="text"
 									placeholder="Código do produto"
@@ -127,7 +120,7 @@ export const AddProducts = () => {
 							</div>
 
 							<div className="form-group">
-								<label htmlFor="codigoProduto">Valor:</label>
+								<label>Valor:</label>
 								<input
 									type="number"
 									placeholder="Valor do Produto"
@@ -143,10 +136,10 @@ export const AddProducts = () => {
 						</div>
 
 						<div className="form-group">
-							<label htmlFor="preco">Quantidade:</label>
+							<label>Quantidade:</label>
 							<input
 								type="number"
-								placeholder="Quantidade do produto"
+								placeholder="Quantidade de produto"
 								{...register("qtdProduto")}
 							/>
 

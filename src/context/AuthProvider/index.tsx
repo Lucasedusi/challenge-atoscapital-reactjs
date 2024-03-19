@@ -1,9 +1,9 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { Api } from "../../services/api";
-import { AuthContextData, IUser } from "./types";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContextData } from "./types";
 
 export const AuthContext = createContext<AuthContextData>(
 	{} as AuthContextData
@@ -12,19 +12,19 @@ export const AuthContext = createContext<AuthContextData>(
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {
-	const [user, setUser] = useState<IUser | null>(null);
+	const [token, setToken] = useState<string | null>(() => {
+		return localStorage.getItem("@Auth:token") || null;
+	});
 
 	useEffect(() => {
-		const loadingStorageData = async () => {
-			const storageUser = localStorage.getItem("@Auth:user");
+		const loadTokenFromStorage = async () => {
 			const storageToken = localStorage.getItem("@Auth:token");
-
-			if (storageUser && storageToken) {
-				setUser(JSON.parse(storageUser));
+			if (storageToken) {
+				setToken(storageToken);
 			}
 		};
 
-		loadingStorageData();
+		loadTokenFromStorage();
 	}, []);
 
 	const signIn = async ({
@@ -35,54 +35,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 		password: string;
 	}) => {
 		try {
-			const response = await Api.post("/auth", { email, password });
+			const response = await Api.post("/login", { email, password });
 
 			if (response.data.error) {
-				toast.error("Erro ao fazer login", {
-					position: "top-center",
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: "colored",
-				});
+				toast.error("Erro ao fazer login", {});
 			} else {
-				setUser(response.data.user);
-				Api.defaults.headers.common[
-					"Authorization"
-				] = `Bearer ${response.data.token}`;
-				localStorage.setItem("@Auth:token", response.data.token);
-				localStorage.setItem("@Auth:user", JSON.stringify(response.data.user));
+				const accessToken = response.data.access_token;
+				setToken(accessToken);
+				Api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+				localStorage.setItem("@Auth:token", accessToken);
 			}
 		} catch (error) {
-			toast.error("Erro ao fazer login", {
-				position: "top-center",
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: "colored",
-			});
+			toast.error("Erro ao fazer login", {});
 		}
 	};
 
 	const signOut = () => {
-		localStorage.clear();
-		setUser(null);
+		localStorage.removeItem("@Auth:token");
+		setToken(null);
 	};
 
 	return (
 		<AuthContext.Provider
-			value={{
-				user,
-				signed: !!user,
-				signIn,
-				signOut,
-			}}
+			value={{ token, isAuthenticated: !!token, signIn, signOut }}
 		>
 			{children}
 			<ToastContainer />

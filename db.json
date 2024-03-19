@@ -1,29 +1,52 @@
 {
   "products": [
     {
-      "product": "Notebook22222",
-      "category": "Categoria 01",
-      "codProduct": "00012",
-      "priceProduto": 10.4,
-      "qtdProduto": "33322",
-      "id": 1
-    },
-    {
-      "product": "testdddddddd",
-      "category": "sss",
-      "codProduct": "112",
-      "priceProduto": 120,
-      "qtdProduto": 11,
-      "dateCadastro": "",
-      "id": 2
-    },
-    {
-      "product": "test",
-      "category": "te",
+      "product": "Arroz",
+      "category": "Alimentos",
       "codProduct": "002",
-      "priceProduto": "22",
-      "qtdProduto": 22,
-      "id": 3
+      "priceProducts": 39,
+      "dateCadastro": "2024-03-19T21:10:56.946Z",
+      "qtdProduto": 20,
+      "id": 4
+    },
+    {
+      "product": "MacBook Pro 17",
+      "category": "Laptops",
+      "codProduct": "001",
+      "priceProducts": 3000,
+      "dateCadastro": "2024-03-19T21:11:37.936Z",
+      "qtdProduto": 2,
+      "id": 5
+    },
+    {
+      "product": "Curso de Teologia",
+      "category": "Ensino",
+      "codProduct": "004",
+      "priceProducts": "305",
+      "qtdProduto": 1,
+      "dateCadastro": "2024-03-19T21:13:05.639Z",
+      "id": 7
+    },
+    {
+      "product": "Bíblia de Estudo King James",
+      "category": "Livros",
+      "codProduct": "006",
+      "priceProducts": 189,
+      "qtdProduto": "1",
+      "dateCadastro": "2024-03-19T21:16:46.438Z",
+      "id": 8
+    },
+    {
+      "product": "Comentário Bíblico",
+      "category": "Livros",
+      "codProduct": "008",
+      "priceProducts": 145,
+      "dateCadastro": "2024-03-19T21:17:40.733Z",
+      "qtdProduto": 2,
+      "id": 9
     }
-  ]
+  ],
+  "users": {
+    "username": "Lucas"
+  }
 }

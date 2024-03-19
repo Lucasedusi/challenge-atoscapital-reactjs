@@ -10,14 +10,8 @@ import { AuthLayout } from "../../components/AuthLayout";
 import { Button } from "../../components/Button";
 
 import { useNavigate } from "react-router-dom";
+import { IRegister } from "../../@types/Products";
 import "./styles.scss";
-
-interface User {
-	name: string;
-	email: string;
-	password: string;
-	confirPassword: string;
-}
 
 const userSchema = yup.object().shape({
 	name: yup.string().required("Nome Obrigatório"),
@@ -39,15 +33,17 @@ export const RegisterPage = () => {
 	const [password, setPassword] = useState("");
 	const [confirPassword, setConfirPassword] = useState("");
 
-	const { register, handleSubmit, formState, clearErrors } = useForm<User>({
-		resolver: yupResolver(userSchema),
-	});
+	const { register, handleSubmit, formState, clearErrors } = useForm<IRegister>(
+		{
+			resolver: yupResolver(userSchema),
+		}
+	);
 
 	const { errors } = formState;
 
 	const navigate = useNavigate();
 
-	const handleCreateUser: SubmitHandler<User> = async () => {
+	const handleCreateUser: SubmitHandler<IRegister> = async () => {
 		try {
 			const data = {
 				name: name,
@@ -55,9 +51,9 @@ export const RegisterPage = () => {
 				password: password,
 			};
 
-			await Api.post("create", data);
+			await Api.post("register", data);
 
-			navigate("/");
+			navigate("/home");
 		} catch (error) {
 			console.error("Erro ao cadastrar usuário:", error);
 		}
@@ -89,7 +85,6 @@ export const RegisterPage = () => {
 				<div className="wrap-input">
 					<span>Email</span>
 					<input
-						onFocus={() => clearErrors("email")}
 						placeholder="seuemail@email.com"
 						className={email !== "" ? "has-value input" : "input"}
 						{...register("email")}
@@ -106,7 +101,6 @@ export const RegisterPage = () => {
 				<div className="wrap-input">
 					<span>Senha</span>
 					<input
-						onFocus={() => clearErrors("password")}
 						placeholder="Digite sua senha..."
 						type="password"
 						className={password !== "" ? "has-value input" : "input"}
@@ -124,7 +118,6 @@ export const RegisterPage = () => {
 				<div className="wrap-input">
 					<span>Confirme a Senha</span>
 					<input
-						onFocus={() => clearErrors("confirPassword")}
 						placeholder="Confirme a senha..."
 						type="password"
 						className={confirPassword !== "" ? "has-value input" : "input"}

@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import { DefaultLayout } from "./layout/defaultLayout";
 import { AddProducts } from "./pages/AddProducts";
 import { EditProducts } from "./pages/EditProducts";
@@ -11,8 +12,11 @@ export function Router() {
 		<Routes>
 			<Route path="/" element={<LoginPage />}></Route>
 			<Route path="/register" element={<RegisterPage />}></Route>
+
 			<Route element={<DefaultLayout />}>
-				<Route path="/home" element={<HomePage />}></Route>
+				<Route element={<ProtectedRoute />}>
+					<Route path="/home" element={<HomePage />}></Route>
+				</Route>
 				<Route path="/addProducts" element={<AddProducts />}></Route>
 				<Route path="/:id/edit" element={<EditProducts />}></Route>
 			</Route>

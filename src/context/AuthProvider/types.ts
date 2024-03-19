@@ -4,8 +4,8 @@ export interface IUser {
 }
 
 export interface AuthContextData {
-	user: IUser | null;
-	signed: boolean;
+	token: string | null;
+	isAuthenticated: boolean;
 	signIn: (credentials: { email: string; password: string }) => Promise<void>;
 	signOut: () => void;
 }

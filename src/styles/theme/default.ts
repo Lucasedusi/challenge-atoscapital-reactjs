@@ -4,8 +4,8 @@ export const defaultTheme = {
 		"base-background": "#F3F2F2",
 		"base-card": "#F3F2F2",
 		"base-error": "#f84747",
-		"brand-purple-dark": "#4B2995",
-		"brand-purple": "#8047F8",
+		"brand-purple-dark": "#89131d",
+		"brand-purple": "#89131d",
 	},
 	textSizes: {
 		"title-title-xl": "3rem",

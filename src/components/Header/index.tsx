@@ -1,33 +1,44 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
 import "./styles.scss";
 
 import axios from "axios";
-import { IoIosNotifications, IoMdSearch } from "react-icons/io";
-import { MdOutlineHelp } from "react-icons/md";
-import { RxAvatar } from "react-icons/rx";
+import { IoMdExit, IoMdSearch } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 export interface IUser {
-	name: string;
+	username: string;
 }
 
 export const Header = () => {
-	const [username, setUsername] = useState("");
+	const [user, setUser] = useState<IUser | null>(null);
+
+	const { signOut } = useContext(AuthContext);
 
 	useEffect(() => {
-		const getProducts = async () => {
-			const response = await axios.get("http://localhost:3333/users");
-
-			setUsername(response.data);
+		const getUsers = async () => {
+			try {
+				const response = await axios.get<IUser>("http://localhost:3001/users");
+				setUser(response.data);
+			} catch (error) {
+				console.error("Error fetching user data:", error);
+			}
 		};
 
-		getProducts();
+		getUsers();
 	}, []);
+
+	const handleSignOut = () => {
+		signOut();
+	};
 
 	return (
 		<>
 			<div className="logo">
-				<img src={Logo} alt="Logo Atos Capital" />
+				<Link to={"/home"}>
+					<img src={Logo} alt="Logo Atos Capital" />
+				</Link>
 			</div>
 			<div className="main-search-bar">
 				<div className="search-bar">
@@ -38,14 +49,13 @@ export const Header = () => {
 				</div>
 			</div>
 			<div className="group-info">
-				<div className="help-icons">
-					<MdOutlineHelp size={24} color="#898989" />
-					<IoIosNotifications size={24} color="#898989" />
+				<div className="group-avatar-name">
+					<img src="https://avatars.githubusercontent.com/u/33089713?v=4" />
+					<p>{user ? user.username : "Loading..."}</p>
 				</div>
 
-				<div className="group-avatar-name">
-					<RxAvatar size={36} />
-					<p>Lucas Eduardo</p>
+				<div className="help-icons">
+					<IoMdExit size={24} color="#898989" onClick={handleSignOut} />
 				</div>
 			</div>
 		</>

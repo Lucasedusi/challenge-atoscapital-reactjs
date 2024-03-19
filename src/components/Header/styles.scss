@@ -53,6 +53,10 @@
 	gap: 10px;
 	margin: 0 25px;
 	align-items: center;
+
+	svg {
+		cursor: pointer;
+	}
 }
 
 .group-avatar-name {
@@ -63,5 +67,12 @@
 	p {
 		font-size: 14px;
 		color: #202020;
+	}
+
+	img {
+		width: 36px;
+		height: 36px;
+		overflow: hidden;
+		border-radius: 50%;
 	}
 }
