@@ -34,16 +34,16 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ```bash
 # Clone este repositório
-$ git clone https://github.com/Lucasedusi/node-backend-umadash.git
+$ git clone https://github.com/jonatasesdras02/api-avalicao-front.git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd node-backend-umadash
+$ cd api-avalicao-front
 
 # Instale as dependências
 $ npm install
 
-# Execute a aplicação em modo de desenvolvimento
-$ yarn dev
+# Execute a aplicação
+$ npm run start-auth
 
 ```
 
