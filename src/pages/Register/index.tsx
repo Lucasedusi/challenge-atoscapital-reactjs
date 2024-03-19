@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Api } from "../../services/api";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,8 +8,10 @@ import Logo from "../../assets/logo.svg";
 import { AuthLayout } from "../../components/AuthLayout";
 import { Button } from "../../components/Button";
 
-import { useNavigate } from "react-router-dom";
+import { FaChevronLeft } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { IRegister } from "../../@types/Products";
+import { AuthContext } from "../../context/AuthProvider";
 import "./styles.scss";
 
 const userSchema = yup.object().shape({
@@ -39,6 +40,8 @@ export const RegisterPage = () => {
 		}
 	);
 
+	const { Account } = useContext(AuthContext);
+
 	const { errors } = formState;
 
 	const navigate = useNavigate();
@@ -51,7 +54,7 @@ export const RegisterPage = () => {
 				password: password,
 			};
 
-			await Api.post("register", data);
+			await Account(data);
 
 			navigate("/home");
 		} catch (error) {
@@ -62,6 +65,11 @@ export const RegisterPage = () => {
 	return (
 		<AuthLayout>
 			<div className="register-form-title-description">
+				<Link to={"/"} className="register-return">
+					<FaChevronLeft color="#0c1421" size={12} />
+					Retornar
+				</Link>
+
 				<h1>Cadastre-se</h1>
 				<p>Preencha os campos para concluir seu cadastro</p>
 			</div>

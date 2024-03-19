@@ -50,6 +50,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 		}
 	};
 
+	const Account = async ({
+		name,
+		email,
+		password,
+	}: {
+		name: string;
+		email: string;
+		password: string;
+	}) => {
+		try {
+			const response = await Api.post("/register", { name, email, password });
+
+			if (response.data.error) {
+				toast.error("Erro ao fazer login", {});
+			} else {
+				const accessToken = response.data.access_token;
+				setToken(accessToken);
+				Api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+				localStorage.setItem("@Auth:token", accessToken);
+			}
+		} catch (error) {
+			toast.error("Erro ao fazer login", {});
+		}
+	};
+
 	const signOut = () => {
 		localStorage.removeItem("@Auth:token");
 		setToken(null);
@@ -57,7 +82,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
 	return (
 		<AuthContext.Provider
-			value={{ token, isAuthenticated: !!token, signIn, signOut }}
+			value={{ token, isAuthenticated: !!token, signIn, Account, signOut }}
 		>
 			{children}
 			<ToastContainer />
